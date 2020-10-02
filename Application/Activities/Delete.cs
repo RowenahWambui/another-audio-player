@@ -3,6 +3,8 @@ using Persistence;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using Application.Errors;
+using System.Net;
 
 namespace Application.Activities
 {
@@ -29,7 +31,7 @@ namespace Application.Activities
                         var activity = await _context.Activities.FindAsync(request.Id);
 
                         if(activity == null)
-                            throw new Exception("Couldnt find activity");
+                            throw new RestException(HttpStatusCode.NotFound, new {activity = "Not found"});
 
                         _context.Remove(activity);
 
