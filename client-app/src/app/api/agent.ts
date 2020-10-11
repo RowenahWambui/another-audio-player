@@ -23,6 +23,7 @@ axios.interceptors.response.use(undefined, (error) => {
   if (error.message === 'Network Error' && !error.response) {
     toast.error('Network error');
   }
+  throw error;
 });
 
 const responseBody = (response: AxiosResponse) => response.data;
