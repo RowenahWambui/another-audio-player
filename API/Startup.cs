@@ -2,23 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Middleware;
+using Application.Activities;
+using Application.Interfaces;
+using Domain;
+using FluentValidation.AspNetCore;
+using Infrastructure.Security;
+using MediatR;
+// using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
-using MediatR;
-using Application.Activities;
-using FluentValidation.AspNetCore;
-using API.Middleware;
-using Microsoft.AspNetCore.Http;
-using Domain;
-using Microsoft.AspNetCore.Identity;
+
 
 namespace API
 {
@@ -56,6 +60,9 @@ namespace API
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
             services.AddAuthentication();
+
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
