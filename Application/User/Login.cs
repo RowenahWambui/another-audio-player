@@ -1,6 +1,7 @@
 using Domain;
 using MediatR;
 using Persistence;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Threading;
@@ -60,7 +61,7 @@ namespace Application.User
                                 DisplayName = user.DisplayName,
                                 Token = _jwtGenerator.CreateToken(user),
                                 Username = user.UserName,
-                                Image = null
+                                Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
                             };
                         }
                         throw new RestException(HttpStatusCode.Unauthorized);
