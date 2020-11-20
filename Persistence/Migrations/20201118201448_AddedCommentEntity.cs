@@ -7,18 +7,18 @@ namespace Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "isMain",
-                table: "Photos",
-                newName: "IsMain");
+            // migrationBuilder.RenameColumn(
+            //     name: "isMain",
+            //     table: "Photos",
+            //     newName: "IsMain");
 
-            migrationBuilder.AlterColumn<bool>(
-                name: "IsMain",
-                table: "Photos",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "TEXT",
-                oldNullable: true);
+            // migrationBuilder.AlterColumn<bool>(
+            //     name: "IsMain",
+            //     table: "Photos",
+            //     nullable: false,
+            //     oldClrType: typeof(string),
+            //     oldType: "TEXT",
+            //     oldNullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Comments",
@@ -63,17 +63,17 @@ namespace Persistence.Migrations
             migrationBuilder.DropTable(
                 name: "Comments");
 
-            migrationBuilder.RenameColumn(
-                name: "IsMain",
-                table: "Photos",
-                newName: "isMain");
+            // migrationBuilder.RenameColumn(
+            //     name: "IsMain",
+            //     table: "Photos",
+            //     newName: "isMain");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "isMain",
-                table: "Photos",
-                type: "TEXT",
-                nullable: true,
-                oldClrType: typeof(bool));
+            // migrationBuilder.AlterColumn<string>(
+            //     name: "isMain",
+            //     table: "Photos",
+            //     type: "TEXT",
+            //     nullable: true,
+            //     oldClrType: typeof(bool));
         }
     }
 }

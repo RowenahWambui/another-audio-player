@@ -1,4 +1,5 @@
 using System.Text;
+using System.Threading.Tasks;
 using API.Middleware;
 using Application.Activities;
 using Application.Interfaces;
@@ -43,7 +44,7 @@ namespace API
 
             services.AddCors(opt =>{
                 opt.AddPolicy("CorsPolicy", policy =>{
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000").AllowCredentials();
                 });
             });
 
@@ -85,6 +86,17 @@ namespace API
                         IssuerSigningKey = key,
                         ValidateAudience = false,
                         ValidateIssuer = false
+                    };
+                    opt.Events = new JwtBearerEvents{
+                        OnMessageReceived = context =>{
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                            if(!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat"))){
+                                context.Token =accessToken;
+
+                            }
+                            return Task.CompletedTask;
+                        }
                     };
                     });
 
