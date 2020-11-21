@@ -2,11 +2,11 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Errors;
+using Application.Interfaces;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Application.Interfaces;
-using Application.Errors;
-using Domain;
 using Persistence;
 
 
