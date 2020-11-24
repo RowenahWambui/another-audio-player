@@ -3,7 +3,6 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from '@microsoft/signalr';
-import { error } from 'console';
 import { action, observable, computed, runInAction } from 'mobx';
 import { SyntheticEvent } from 'react';
 import { toast } from 'react-toastify';
