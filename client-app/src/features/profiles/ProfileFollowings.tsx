@@ -5,7 +5,12 @@ import ProfileCard from './ProfileCard';
 
 const ProfileFollowings = () => {
   const rootStore = useContext(RootStoreContext);
-  const { profile } = rootStore.profileStore;
+  const {
+    profile,
+    followings,
+    loadFollowings,
+    loading,
+  } = rootStore.profileStore;
   return (
     <Tab.Pane>
       <Grid>
