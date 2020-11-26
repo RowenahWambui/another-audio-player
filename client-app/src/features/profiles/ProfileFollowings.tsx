@@ -12,7 +12,7 @@ const ProfileFollowings = () => {
     loading,
   } = rootStore.profileStore;
   return (
-    <Tab.Pane>
+    <Tab.Pane loading={loading}>
       <Grid>
         <Grid.Column width={16}>
           <Header
