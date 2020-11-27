@@ -1,4 +1,4 @@
-import { action, computed, observable, runInAction } from 'mobx';
+import { action, computed, observable, runInAction, reaction } from 'mobx';
 import agent from '../api/agent';
 import { IPhoto, IProfile } from '../models/profile.model';
 import { RootStore } from './rootStore';
@@ -8,6 +8,18 @@ export default class ProfileStore {
   rootStore: RootStore;
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
+
+    reaction(
+      () => this.activeTab,
+      (activeTab) => {
+        if (activeTab === 3 || activeTab === 4) {
+          const predicate = activeTab === 3 ? 'followers' : 'following';
+          this.loadFollowings(predicate);
+        } else {
+          this.followings = [];
+        }
+      }
+    );
   }
 
   @observable profile: IProfile | null = null;
@@ -27,7 +39,7 @@ export default class ProfileStore {
 
   @action setActiveTab = (activeIndex: number) => {
     this.activeTab = activeIndex;
-  }
+  };
 
   @action loadProfile = async (username: string) => {
     this.loadingProfile = true;

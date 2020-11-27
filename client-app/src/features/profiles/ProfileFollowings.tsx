@@ -8,8 +8,7 @@ const ProfileFollowings = () => {
   const {
     profile,
     followings,
-    loadFollowings,
-    loading,
+    loading, activeTab
   } = rootStore.profileStore;
   return (
     <Tab.Pane loading={loading}>
@@ -19,7 +18,7 @@ const ProfileFollowings = () => {
             floated='left'
             icon='user'
             content={
-              true
+              activeTab === 3
                 ? `People following ${profile!.displayName}`
                 : `People ${profile!.displayName} is following`
             }
@@ -27,11 +26,9 @@ const ProfileFollowings = () => {
         </Grid.Column>
         <Grid.Column width={16}>
           <Card.Group itemsPerRow={5}>
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
+            {followings.map(profile => (
+              <ProfileCard key={profile.username} profile={profile} />
+            ))}
           </Card.Group>
         </Grid.Column>
       </Grid>
