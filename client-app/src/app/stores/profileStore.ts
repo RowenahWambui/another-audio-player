@@ -1,6 +1,6 @@
 import { action, computed, observable, runInAction, reaction } from 'mobx';
 import agent from '../api/agent';
-import { IPhoto, IProfile } from '../models/profile.model';
+import { IPhoto, IProfile, IUserActivity } from '../models/profile.model';
 import { RootStore } from './rootStore';
 import { toast } from 'react-toastify';
 
@@ -28,6 +28,8 @@ export default class ProfileStore {
   @observable loading = false;
   @observable followings: IProfile[] = [];
   @observable activeTab: number = 0;
+  @observable userActivities: IUserActivity [] = []
+  @observable loadingActivities = false
 
   @computed get isCurrentUser() {
     if (this.rootStore.userStore.user && this.profile) {
@@ -36,6 +38,23 @@ export default class ProfileStore {
       return false;
     }
   }
+
+  @action loadUserActivities = async (username: string, predicate?: string) => {
+    this.loadingActivities = true;
+    try {
+      const activities = await agent.Profiles.listActivities(username, predicate!);
+      runInAction(() => {
+        this.userActivities = activities;
+        this.loadingActivities = false;
+      })
+    } catch (error) {
+      toast.error('Problem loading activities')
+      runInAction(() => {
+        this.loadingActivities = false;
+      })
+    }
+  }
+
 
   @action setActiveTab = (activeIndex: number) => {
     this.activeTab = activeIndex;
@@ -152,7 +171,7 @@ export default class ProfileStore {
   @action unfollow = async (username: string) => {
     this.loading = true;
     try {
-      await agent.Profiles.follow(username);
+      await agent.Profiles.unfollow(username);
       runInAction(() => {
         this.profile!.following = false;
         this.profile!.followersCount--;
@@ -160,6 +179,8 @@ export default class ProfileStore {
       });
     } catch (error) {
       toast.error('Problem unfollowing user');
+      console.log(error);
+      
       runInAction(() => {
         this.loading = false;
       });

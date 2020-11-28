@@ -60,7 +60,8 @@ const ProfileHeader: React.FC<IProps> = ({
                 />
               </Reveal.Content>
               <Reveal.Content hidden>
-                <Button loading={loading}
+                <Button
+                  loading={loading}
                   fluid
                   basic
                   color={profile.following ? 'red' : 'green'}
