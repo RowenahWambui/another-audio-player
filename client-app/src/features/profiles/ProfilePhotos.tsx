@@ -54,11 +54,11 @@ const ProfilePhotos = () => {
                     {isCurrentUser && (
                       <Button.Group>
                         <Button
-                          name={photo.id}
-                          onClick={(e) => {
+                          onClick={e => {
                             setMainPhoto(photo);
                             setTarget(e.currentTarget.name);
                           }}
+                          name={photo.id}
                           disabled={photo.isMain}
                           loading={loading && target === photo.id}
                           basic
